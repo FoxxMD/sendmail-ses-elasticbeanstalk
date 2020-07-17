@@ -55,7 +55,7 @@ if test "${ary['MAIL_HOST']+isset}" && test "${ary['MAIL_USERNAME']+isset}" && t
             cp /etc/mail/sendmail.mc /etc/mail/sendmail.mc_bak
             cp /etc/mail/sendmail.cf /etc/mail/sendmail.cf_bak
 
-            FULLLINE="define(\`SMART_HOST', \`$HOST')dnl\ndefine(\`RELAY_MAILER_ARGS', \`TCP \$h 25')dnl\ndefine(\`confAUTH_MECHANISMS', \`LOGIN PLAIN')dnl\nFEATURE(\`authinfo', \`hash -o /etc/mail/authinfo.db')dnl\nMASQUERADE_AS(\`$FROM')dnl\nFEATURE(masquerade_envelope)dnl\nFEATURE(masquerade_entire_domain)dnl"
+            FULLLINE="define(\`SMART_HOST', \`$HOST')dnl\ndefine(\`RELAY_MAILER',\`esmtp')dnl\ndefine(\`RELAY_MAILER_ARGS', \`TCP \$h 587')dnl\ndefine(\`confAUTH_MECHANISMS', \`LOGIN PLAIN')dnl\nFEATURE(\`authinfo', \`hash -o /etc/mail/authinfo.db')dnl\nMASQUERADE_AS(\`$FROM')dnl\nFEATURE(masquerade_envelope)dnl\nFEATURE(masquerade_entire_domain)dnl"
             awk -v line="$FULLLINE" '!found && /MAILER\(/ {print line; found=1 } 1' /etc/mail/sendmail.mc  > /etc/mail/sendmail_modified.mc
             cat /etc/mail/sendmail_modified.mc > /etc/mail/sendmail.mc
 
